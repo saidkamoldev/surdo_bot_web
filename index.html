@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mini App</title>
+</head>
+<body>
+  <h1>Mini App saytiga xush kelibsiz!</h1>
+
+  <!-- Telegram WebApp SDKni yuklash -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  
+  <script>
+    const tg = window.Telegram.WebApp;
+    tg.expand(); // Ilovani to'liq ekran qilish
+    console.log(tg.initData); // Foydalanuvchi ma'lumotlarini olish
+  </script>
+</body>
+</html>
