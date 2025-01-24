@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get User Info</title>
+</head>
+<body>
+    <script>
+        function getUserInfo() {
+            const url = new URL('http://10.0.2.15:8080/profile');
+
+            // Query parameters
+            const params = {
+                FirstName: "Saikamols",
+                LastName: "Jo'rqulovds",
+                TelegramID: 1460974373,
+                PhoneNumber: "+99891504768",
+                Email: "saidkamolpubg6@gmail.com",
+                Language: "uzb",
+                Money: 0,
+                FrozenMoney: 0,
+                IsDocumentsApproved: false
+            };
+
+            Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
+
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch(error => console.error('Error:', error));
+        }
+
+        // Call the function to send the GET request
+        getUserInfo();
+    </script>
+</body>
+</html>
