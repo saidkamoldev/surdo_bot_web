@@ -1,11 +1,11 @@
 package buttons
 
 import (
-	"fmt"
+	
 	"log"
 	"s21/surdo/internal/bot/config"
 	"s21/surdo/pkg/middleware"
-
+	"fmt"
 	// "s21/surdo/pkg/middleware"
 
 	// "strconv"
@@ -34,7 +34,7 @@ func HelloButton() {
         log.Fatal(err)
         return
     }
-
+	fmt.Println("ZAYBALLLLLLLLLLLLLLLLLLLLLLLLL", Telegram_id)
     b.Handle("/start", startHandler)
     languageButtons := CreateInlineButtons()
 
@@ -145,10 +145,18 @@ if data == "order_online" {
 
 	// Profile tugmasi
 	if data == "profile" {
-		infoProfile(c)
+			log.Println("Mini-appni ochishga urinish...")
+		err := c.Send("Buyurtma berish uchun tugmani bosing:", infoProfile())
+		if err != nil {
+			log.Printf("Xatolik: %v", err) // Xatolikni logga yozing
+			return err
+		}
+		log.Println("Mini-app muvaffaqiyatli yuborildi!")
+		return nil
 	}
 
 	return nil
+	
 }
 
 
@@ -163,7 +171,7 @@ func CreateOrderButton() *tele.ReplyMarkup {
 
     // Mini App tugmasi
     webAppButton := inlineKeys.WebApp("Registratsiya", &tele.WebApp{
-        URL: "https://9085-217-30-173-218.ngrok-free.app/web/",
+        URL: "https://kosmostj.uz/",
     })
 
     inlineKeys.Inline(
@@ -255,28 +263,24 @@ func Orders(c tele.Context) error {
 
 
 // input user_info
-func infoProfile(c tele.Context) error {
-	userID := c.Sender().ID
-	if userData[userID] == nil {
-		return c.Send("Profil ma'lumotlari topilmadi!")
-	}
+func infoProfile()*tele.ReplyMarkup {
+    inlineKeys := &tele.ReplyMarkup{}
 
-	
-	profileMessage := fmt.Sprintf(
-		"Sizning profil ma'lumotlaringiz:\n"+
-			"Til: %s\n"+
-			"Ism: %s\n"+
-			"Familiya: %s\n"+
-			"Telefon: %s\n"+
-			"Email: %s",
-		userData[userID]["language"],
-		userData[userID]["name"],
-		userData[userID]["surname"],
-		userData[userID]["phone"],
-		userData[userID]["email"],
-	)
+    // Online buyurtma tugmasi
+    // orderButton := inlineKeys.Data( "order_online", "")
+    // orderButton.WebApp = &tele.WebApp{
+    //     URL: "https://static.okibiteam.ru/srd/index.html",
+    // }
 
-	
-	return c.Send(profileMessage)
+    // Mini App tugmasi
+    webAppButton := inlineKeys.WebApp("Registratsiya", &tele.WebApp{
+        URL: "https://kosmostj.uz/profile/index.html",
+    })
+
+    inlineKeys.Inline(
+        // inlineKeys.Row(orderButton),
+        inlineKeys.Row(webAppButton),
+    )
+    return inlineKeys
 }
 

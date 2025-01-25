@@ -21,7 +21,7 @@ func main() {
 
     // CORS middleware ni qo'shing
     router.Use(cors.New(cors.Config{
-        AllowOrigins:     []string{"http://127.0.0.1:5501"},
+        AllowOrigins:     []string{"http://127.0.0.1:5501", "https://kosmostj.uz/"},
         AllowMethods:     []string{"GET", "POST", "PUT", "DELETE"},
         AllowHeaders:     []string{"Origin", "Content-Type"},
         ExposeHeaders:    []string{"Content-Length"},
@@ -34,8 +34,8 @@ func main() {
     // Swagger
     // router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
-    router.GET("/users", api.GetAllUsers)   
-    router.GET("profile", api.GetUserByTelegramID)            // Получить все песни
+//    router.GET("/users", api.GetAllUsers)   
+    router.GET("/users", api.GetUserByTelegramID)            // Получить все песни
     router.POST("/users", api.CreateUser)               // Добавить новую песню
     // router.GET("/songs/:id/lyrics", api.GetSongsLyrics) // Получить текст песни по id
     // router.GET("/songs/:id", api.Getsong)               // Получить песню по id

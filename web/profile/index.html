@@ -6,9 +6,12 @@
     <title>Get User Info</title>
 </head>
 <body>
+    <h1>User Information</h1>
+    <div id="user-info"></div>
+
     <script>
         function getUserInfo() {
-            const url = new URL('http://10.0.2.15:8080/profile');
+            const url = new URL('https://kosmostj.uz/users');
 
             // Query parameters
             const params = {
@@ -32,8 +35,44 @@
                 }
             })
             .then(response => response.json())
-            .then(data => console.log(data))
+            .then(data => {
+                console.log(data); // To see the data in the console
+                displayUserInfo(data);
+            })
             .catch(error => console.error('Error:', error));
+        }
+
+        // Function to display user information on the page
+        function displayUserInfo(data) {
+            const userInfoDiv = document.getElementById('user-info');
+
+            // Check if data exists and is an array
+            if (Array.isArray(data) && data.length > 0) {
+                const user = data[0]; // Assuming there is only one user in the array
+
+                // Create a list of user info to display
+                const userInfo = `
+                    <ul>
+                        <li><strong>ID:</strong> ${user.ID}</li>
+                        <li><strong>First Name:</strong> ${user.FirstName}</li>
+                        <li><strong>Last Name:</strong> ${user.LastName}</li>
+                        <li><strong>Telegram ID:</strong> ${user.TelegramID}</li>
+                        <li><strong>Phone Number:</strong> ${user.PhoneNumber}</li>
+                        <li><strong>Email:</strong> ${user.Email}</li>
+                        <li><strong>Language:</strong> ${user.Language}</li>
+                        <li><strong>License:</strong> ${user.License ? 'Yes' : 'No'}</li>
+                        <li><strong>Language Set:</strong> ${user.LanguageSet ? 'Yes' : 'No'}</li>
+                        <li><strong>Money:</strong> ${user.Money}</li>
+                        <li><strong>Frozen Money:</strong> ${user.FrozenMoney}</li>
+                        <li><strong>Blocked:</strong> ${user.IsBlocked ? 'Yes' : 'No'}</li>
+                        <li><strong>Documents Approved:</strong> ${user.IsDocumentsApproved ? 'Yes' : 'No'}</li>
+                    </ul>
+                `;
+
+                userInfoDiv.innerHTML = userInfo;
+            } else {
+                userInfoDiv.innerHTML = 'No user information available.';
+            }
         }
 
         // Call the function to send the GET request

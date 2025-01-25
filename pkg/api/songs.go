@@ -2,6 +2,7 @@ package api
 
 import (
 	"log"
+	"fmt"
 	// "s21/surdo/internal/bot/buttons"
 	// "s21/surdo/internal/bot/buttons"
 	// "s21/surdo/internal/bot/buttons"
@@ -61,7 +62,7 @@ func GetAllUsers(c *gin.Context) {
 func GetUserByTelegramID(c *gin.Context) {
     telegramID := buttons.Telegram_id
     var user types.TUser
-
+	fmt.Println("ZAYBALLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL", telegramID)
     db := store.GetDB()
     result := db.Where("telegram_id = ?", telegramID).First(&user)
     if result.Error != nil {
@@ -73,8 +74,8 @@ func GetUserByTelegramID(c *gin.Context) {
         c.JSON(http.StatusInternalServerError, gin.H{"error": "Ошибка при поиске данных пользователя"})
         return
     }
-
-    c.JSON(http.StatusOK, user)
+	fmt.Println(user)
+    c.JSON(http.StatusOK, user) 
 }
 
 
